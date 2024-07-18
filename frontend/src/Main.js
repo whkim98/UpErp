@@ -5,8 +5,15 @@ import { Box, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
+    const navigate = useNavigate();
+
+    const mvPage = (path) => {
+        navigate(path);
+    }
+
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -37,7 +44,6 @@ const Main = () => {
         width: '100%',
         '& .MuiInputBase-input': {
             padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             transition: theme.transitions.create('width'),
             [theme.breakpoints.up('sm')]: {
@@ -62,12 +68,11 @@ const Main = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    
-                    <Button style={{ color: 'black' }}>인사관리</Button>
-                    <Button style={{ color: 'black' }}>거래처관리</Button>
-                    <Button style={{ color: 'black' }}>품목관리</Button>
-                    <Button style={{ color: 'black' }}>구매관리</Button>
-                    <Button style={{ color: 'black' }}>판매관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => mvPage('/employee-management')}>인사관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => mvPage('/client-management')}>거래처관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => mvPage('/item-management')}>품목관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => mvPage('/purchase-management')}>구매관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => mvPage('/sales-management')}>판매관리</Button>
                 </Box>
 
                 <Box>
