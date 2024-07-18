@@ -62,7 +62,7 @@ const Main = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    
+
                     <Button style={{ color: 'black' }}>인사관리</Button>
                     <Button style={{ color: 'black' }}>거래처관리</Button>
                     <Button style={{ color: 'black' }}>품목관리</Button>
