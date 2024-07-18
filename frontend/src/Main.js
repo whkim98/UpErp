@@ -22,17 +22,15 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-  };
+};
 
 const Main = () => {
-
-    //로그인 체크로 데이터 보내기
     const [email, setEmail] = useState('');
     const [employee_pw, setEmployee_pw] = useState('');
 
     const loginCheck = async () => {
         try {
-            const response = await axios.post('/loginCheck', { email, employee_pw });
+            const response = await axios.post('http://localhost:3000/api/loginCheck', { email, employee_pw });
             if (response.data.success) {
                 console.log('Login successful');
                 handleClose();
@@ -44,7 +42,7 @@ const Main = () => {
         }
     };
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -52,7 +50,7 @@ const Main = () => {
 
     const mvPage = (path) => {
         navigate(path);
-    }
+    };
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -116,42 +114,41 @@ const Main = () => {
                 </Box>
 
                 <Box>
-                    <Stack direction="row" spacing={2} style={{marginRight: '20px', marginTop: '5px'}}>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
+                    <Stack direction="row" spacing={2} style={{ marginRight: '20px', marginTop: '5px' }}>
+                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
 
                         {/* 모달로 로그인 */}
-                        <Button onClick={handleOpen} style={{border: '1px solid', color: 'black'}}>Login</Button>
-                            <Modal
-                                open={open}
-                                onClose={handleClose}
-                                aria-labelledby="modal-modal-title"
-                                aria-describedby="modal-modal-description">
-                                <Box sx={style}>
+                        <Button onClick={handleOpen} style={{ border: '1px solid', color: 'black' }}>Login</Button>
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description">
+                            <Box sx={style}>
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Login
                                 </Typography>
-                                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                <Box id="modal-modal-description" sx={{ mt: 2 }}>
 
-                                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                                    <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    <TextField id="input-with-sx" label="E-MAIL" variant="standard"
-                                    value={email} onChange={(e) => setEmail(e.target.value)}/>
-                                </Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                                        <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                        <TextField id="input-with-sx" label="E-MAIL" variant="standard"
+                                            value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    </Box>
 
-                                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                                    <KeyIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    <TextField id="input-with-sx" label="PASSWORD" variant="standard"
-                                    value={employee_pw} onChange={(e) => setEmployee_pw(e.target.value)}/>
-                                </Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'flex-end', mt: 2 }}>
+                                        <KeyIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                        <TextField id="input-with-sx" label="PASSWORD" variant="standard"
+                                            value={employee_pw} onChange={(e) => setEmployee_pw(e.target.value)} />
+                                    </Box>
 
-                                <br/>
-                                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                                    <Button style={{border: '1px solid', width: '15px', color: 'black'}}
-                                    onClick={loginCheck}>제출</Button>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                                        <Button style={{ border: '1px solid', color: 'black' }}
+                                            onClick={loginCheck}>제출</Button>
+                                    </Box>
                                 </Box>
-                                </Typography>
-                                </Box>
-                            </Modal>
+                            </Box>
+                        </Modal>
 
                     </Stack>
                 </Box>
