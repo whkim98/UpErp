@@ -1,9 +1,4 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import { Box, Button } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
 import React from 'react';
 
 const Main = () => {
