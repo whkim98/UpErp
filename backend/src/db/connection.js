@@ -2,10 +2,10 @@
 import mysql from 'mysql2';
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
+    host: 'db-n9jkl-kr.vpc-pub-cdb.ntruss.com',
+    user: 'nodeerp',
     password: 'dnehd1008@',
-    database: 'NodeERP'
+    database: 'nodeERP'
 });
 
 connection.connect(err => {
