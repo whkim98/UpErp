@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Main from './Main';
 import EmployeeManagement from './components/Employee/EmployeeManagement';
+import LoginForm from './components/Login/LoginForm';
 // import EmployeeManagement from './EmployeeManagement';
 // import ClientManagement from './ClientManagement';
 // import ItemManagement from './ItemManagement';
@@ -18,6 +19,7 @@ const Root = () => {
                 <Route path="/item-management" element={<ItemManagement />} />
                 <Route path="/purchase-management" element={<PurchaseManagement />} />
                 <Route path="/sales-management" element={<SalesManagement />} /> */}
+                <Route path="/loginform" element={<LoginForm/>}/>
             </Routes>
         </Router>
     );
