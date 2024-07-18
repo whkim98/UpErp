@@ -13,7 +13,7 @@ connection.connect(err => {
         console.error('Error connecting to the database:', err.stack);
         return;
     }
-    console.log('DB연결성공!!');
+    console.log('DB연결성공!!!');
 });
 
 export default connection;
