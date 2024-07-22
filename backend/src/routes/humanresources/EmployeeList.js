@@ -28,4 +28,12 @@ router.get('/employees', (req, res) => {
     });
 });
 
+router.get('/orderby/employees', (req, res) => {
+    const departmentQuery = 'SELECT * FROM employees order by department';
+    const jobTitleQuery = 'SELECT * FROM employees order by job_title';
+    const hireDateQuery = 'SELECT * FROM employees order by hire_date';
+
+
+})
+
 export default router;
