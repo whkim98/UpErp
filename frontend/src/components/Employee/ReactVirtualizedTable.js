@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +10,7 @@ import { TableVirtuoso } from 'react-virtuoso';
 import SearchIcon from '@mui/icons-material/Search';
 import { FormControl, InputLabel, MenuItem, Select, alpha, styled } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
+import axios from 'axios';
 
 // 테이블 열 정의
 const columns = [
@@ -88,8 +89,10 @@ function rowContent(index, row) {
 }
 
 // 테이블 컴포넌트
-export default function ReactVirtualizedTable({ data }) {
-    
+export default function ReactVirtualizedTable({ data: initialData }) {
+    const [order, setOrder] = useState('');
+    const [tableData, setTableData] = useState(initialData); // 상태 변수 이름 변경
+
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -127,49 +130,58 @@ export default function ReactVirtualizedTable({ data }) {
         },
     }));
 
-    const [order, setOrder] = React.useState('');
+    const handleChange = async (event) => {
+        const selectedOrder = event.target.value;
+        setOrder(selectedOrder);
 
-    const handleChange = (event) => {
-      setOrder(event.target.value);
+        try {
+            const response = await axios.get('/api/orderby/employees', {
+                params: { order: selectedOrder }
+            });
+            console.log('데이터', response.data);
+            setTableData(response.data); // 데이터 상태 업데이트
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: '16px', flexDirection: 'column', alignItems: 'flex-start' }}>
-      <div style={{ display: 'flex', width: '80%', marginBottom: '16px' }}>
-        <Search>
-            <SearchIconWrapper>
-                <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-            />
-        </Search>
-        <FormControl style={{ marginLeft: '16px', width: '150px' }}>
-          <InputLabel id="demo-simple-select-label">정렬</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={order}
-            label="정렬"
-            onChange={handleChange}
-          >
-            <MenuItem value={'department'}>부서순</MenuItem>
-            <MenuItem value={'job_title'}>직책순</MenuItem>
-            <MenuItem value={'hire_date'}>입사일순</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
-        
-      <Paper style={{ height: 400, width: '80%' }}> {/* Paper의 width를 80%로 설정 */}
-        <TableVirtuoso
-          data={data}
-          components={VirtuosoTableComponents}
-          fixedHeaderContent={fixedHeaderContent}
-          itemContent={rowContent}
-          style={{ width: '100%' }} // TableVirtuoso의 width를 100%로 설정
-        />
-      </Paper>
-    </div>
-  );
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '16px', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', width: '80%', marginBottom: '16px' }}>
+                <Search>
+                    <SearchIconWrapper>
+                        <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        placeholder="Search…"
+                        inputProps={{ 'aria-label': 'search' }}
+                    />
+                </Search>
+                <FormControl style={{ marginLeft: '16px', width: '150px' }}>
+                    <InputLabel id="demo-simple-select-label">정렬</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={order}
+                        label="정렬"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={'department'}>부서순</MenuItem>
+                        <MenuItem value={'job_title'}>직책순</MenuItem>
+                        <MenuItem value={'hire_date'}>입사일순</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
+            
+            <Paper style={{ height: 400, width: '80%' }}> {/* Paper의 width를 80%로 설정 */}
+                <TableVirtuoso
+                    data={tableData} // 상태로부터 데이터를 전달
+                    components={VirtuosoTableComponents}
+                    fixedHeaderContent={fixedHeaderContent}
+                    itemContent={rowContent}
+                    style={{ width: '100%' }} // TableVirtuoso의 width를 100%로 설정
+                />
+            </Paper>
+        </div>
+    );
 }
