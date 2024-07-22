@@ -1,0 +1,57 @@
+/* 캘린더 전체 스타일 */
+.custom-calendar {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 850px; /* 캘린더 너비 조정 */
+    margin-right: 50px;
+  }
+  
+  /* 요일 이름 숨기기 */
+  .react-calendar__month-view__weekdays {
+    display: none; /* 요일 숨기기 */
+  }
+  
+  /* 날짜 버튼 스타일 */
+  .react-calendar__tile {
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2rem; /* 숫자 크기 조정 (필요 시) */
+    transition: background-color 0.2s ease;
+    line-height: 2.5rem; /* 숫자의 위아래 간격 조정 */
+  }
+  
+  /* 날짜 버튼 위아래 간격 조정 */
+  .react-calendar__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* 오늘 날짜 강조 스타일 */
+  .react-calendar__tile--now {
+    border: 2px solid #007bff;
+  }
+  
+  /* 선택된 날짜 강조 스타일 */
+  .react-calendar__tile--active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  /* 내비게이션(다음/이전 달) 버튼 스타일 */
+  .react-calendar__navigation {
+    justify-content: center;
+  }
+  
+  /* 전체 캘린더의 간격 조정 */
+  .react-calendar__month-view__days {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .react-calendar__month-view__weekdays abbr {
+    text-decoration: none;
+    font-weight: 800;
+  }

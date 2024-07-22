@@ -1,6 +1,7 @@
-import { IconButton, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
+import { IconButton, ImageList, ImageListItem, ImageListItemBar, Box } from '@mui/material';
 import React from 'react';
 import InfoIcon from '@mui/icons-material/Info';
+import CalendarComponent from './Calendar';
 
 const MainContent = () => {
     const itemData = [
@@ -37,35 +38,44 @@ const MainContent = () => {
           featured: true,
         },
       ];
+
     return (
-        <div>
-            <ImageList sx={{ width: 400, height: 450, marginLeft: '20px' }}>
-                <ImageListItem key="Subheader" cols={2}>
-                </ImageListItem>
-                {itemData.map((item) => (
-                    <ImageListItem key={item.img}>
-                    <img
-                        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        src={`${item.img}?w=248&fit=crop&auto=format`}
-                        alt={item.title}
-                        loading="lazy"
-                    />
-                    <ImageListItemBar
-                        title={item.title}
-                        subtitle={item.author}
-                        actionIcon={
-                        <IconButton
-                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                            aria-label={`info about ${item.title}`}
-                        >
-                            <InfoIcon />
-                        </IconButton>
-                        }
-                    />
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }} style={{marginLeft: '20px'}}>
+            {/* 이미지 리스트 */}
+            <Box sx={{ flex: 1, mr: 2 }}>
+                <ImageList sx={{ width: 400, height: 450 }}>
+                    <ImageListItem key="Subheader" cols={2}>
                     </ImageListItem>
-                ))}
-            </ImageList>
-        </div>
+                    {itemData.map((item) => (
+                        <ImageListItem key={item.img}>
+                            <img
+                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                src={`${item.img}?w=248&fit=crop&auto=format`}
+                                alt={item.title}
+                                loading="lazy"
+                            />
+                            <ImageListItemBar
+                                title={item.title}
+                                subtitle={item.author}
+                                actionIcon={
+                                    <IconButton
+                                        sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                        aria-label={`info about ${item.title}`}
+                                    >
+                                        <InfoIcon />
+                                    </IconButton>
+                                }
+                            />
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+            </Box>
+
+            {/* 날짜 선택기 */}
+            <Box sx={{ flex: 1 }}>
+                <CalendarComponent/>
+            </Box>
+        </Box>
     );
 };
 
