@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ReactVirtualizedTable from './ReactVirtualizedTable'; // 경로를 맞춰주세요
 
 const HumanResource = () => {
   const [employees, setEmployees] = useState([]);
@@ -11,7 +12,23 @@ const HumanResource = () => {
       try {
         const response = await axios.get('/api/employees'); // 데이터 가져오기
         console.log('Fetched employees data:', response.data); // 콘솔에 데이터 출력
-        setEmployees(response.data); // 상태에 데이터 저장
+
+        // 데이터 형식을 테이블에 맞게 변환
+        const formattedData = response.data.map((employee, index) =>
+          createData(
+            index,
+            employee.first_name,
+            employee.last_name,
+            employee.email,
+            employee.phone,
+            employee.hire_date,
+            employee.job_title,
+            employee.department,
+            employee.salary
+          )
+        );
+        
+        setEmployees(formattedData); // 상태에 데이터 저장
       } catch (error) {
         console.error('Error fetching employees:', error); // 콘솔에 에러 출력
         setError(error.message); // 에러 메시지 저장
@@ -27,21 +44,13 @@ const HumanResource = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
-      <h1>Employee List</h1>
-      {employees.length === 0 ? (
-        <p>No employees found</p>
-      ) : (
-        <ul>
-          {employees.map((employee) => (
-            <li key={employee.employee_id}>
-              {employee.email} - {employee.employee_pw} - {employee.last_name}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <ReactVirtualizedTable data={employees} />
   );
 };
+
+// 데이터 생성 함수
+function createData(id, first_name, last_name, email, phone, hire_date, job_title, department, salary) {
+  return { id, first_name, last_name, email, phone, hire_date, job_title, department, salary };
+}
 
 export default HumanResource;
