@@ -28,3 +28,9 @@ yarn-error.log*
 node_modules/.cache/
 
 node_modules/
+
+# Ignore specific Babel cache file
+.babel.7.24.9.development.json
+
+# Ignore all Babel cache files (if applicable)
+backend/node_modules/.cache/@babel/register/
