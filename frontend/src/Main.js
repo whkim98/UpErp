@@ -33,12 +33,17 @@ const Main = () => {
             const response = await axios.post('http://localhost:3000/api/loginCheck', { email, employee_pw });
             if (response.data.success) {
                 console.log('Login successful');
+                alert('로그인되었습니다.');
                 handleClose();
             } else {
                 console.log('Login failed');
+                alert('ID 또는 PW가 일치하지 않습니다.');
+                setEmployee_pw('');
             }
         } catch (error) {
             console.error('Error during login:', error);
+            alert('ID 또는 PW가 일치하지 않습니다.');
+            setEmployee_pw('');
         }
     };
 
@@ -115,7 +120,7 @@ const Main = () => {
 
                 <Box>
                     <Stack direction="row" spacing={2} style={{ marginRight: '20px', marginTop: '5px' }}>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        <Avatar alt="Image" src="../image/noimage1.png" />
 
                         {/* 모달로 로그인 */}
                         <Button onClick={handleOpen} style={{ border: '1px solid', color: 'black' }}>Login</Button>
@@ -138,7 +143,7 @@ const Main = () => {
 
                                     <Box sx={{ display: 'flex', alignItems: 'flex-end', mt: 2 }}>
                                         <KeyIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                        <TextField id="input-with-sx" label="PASSWORD" variant="standard"
+                                        <TextField id="input-with-sx" label="PASSWORD" variant="standard" type="password"
                                             value={employee_pw} onChange={(e) => setEmployee_pw(e.target.value)} />
                                     </Box>
 
