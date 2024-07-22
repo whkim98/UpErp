@@ -26,3 +26,5 @@ yarn-error.log*
 
 # Babel cache
 node_modules/.cache/
+
+node_modules/
