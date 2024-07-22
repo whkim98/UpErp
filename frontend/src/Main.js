@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // useLocation 임포트
 import axios from 'axios';
 import { Box, Button, TextField, Modal, Typography, Avatar, Stack } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
@@ -7,6 +7,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
+import MainContent from './MainContent';
 
 const style = {
     position: 'absolute',
@@ -28,6 +29,7 @@ const Main = () => {
     const [open, setOpen] = useState(false);
 
     const navigate = useNavigate();
+    const location = useLocation(); // 현재 위치 정보 가져오기
 
     // 로그인 체크
     const loginCheck = async () => {
@@ -90,6 +92,15 @@ const Main = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    // 버튼 클릭 시 페이지 이동 처리
+    const handleNavigation = async (path) => {
+        if (isLoggedIn) {
+            navigate(path);
+        } else {
+            alert('로그인 후 이용해 주세요.');
+        }
+    };
+
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -135,6 +146,25 @@ const Main = () => {
         <div>
             <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }} style={{ width: '100%' }}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="a"
+                        href="/"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            letterSpacing: '.3rem',
+                            color: 'inherit',
+                            textDecoration: 'none',
+                            marginLeft: '10px'
+                        }}
+                    >
+                        UpERP
+                    </Typography>
+
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -144,11 +174,12 @@ const Main = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Button style={{ color: 'black' }} onClick={() => navigate('/employee-management')}>인사관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => navigate('/client-management')}>거래처관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => navigate('/item-management')}>품목관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => navigate('/purchase-management')}>구매관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => navigate('/sales-management')}>판매관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/employee-management')}>인사관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/client-management')}>거래처관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/item-management')}>품목관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/purchase-management')}>구매관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/sales-management')}>판매관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/sales-management')}>공지사항</Button>
                 </Box>
 
                 <Box>
@@ -205,6 +236,7 @@ const Main = () => {
                 </Box>
             </Box>
             <hr />
+            {location.pathname === '/' && <MainContent />} {/* 현재 경로가 루트('/')일 때만 MainContent 표시 */}
         </div>
     );
 };
