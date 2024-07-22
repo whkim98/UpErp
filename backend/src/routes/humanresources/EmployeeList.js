@@ -1,5 +1,5 @@
 import express from 'express';
-import connection from '../db/connection.js';
+import connection from '../../db/connection';
 import bodyParser from 'body-parser';
 
 const router = express.Router();
