@@ -127,10 +127,10 @@ export default function ReactVirtualizedTable({ data }) {
         },
     }));
 
-    const [age, setAge] = React.useState('');
+    const [order, setOrder] = React.useState('');
 
     const handleChange = (event) => {
-      setAge(event.target.value);
+      setOrder(event.target.value);
     };
 
   return (
@@ -150,13 +150,13 @@ export default function ReactVirtualizedTable({ data }) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={order}
             label="정렬"
             onChange={handleChange}
           >
-            <MenuItem value={10}>부서순</MenuItem>
-            <MenuItem value={20}>직책순</MenuItem>
-            <MenuItem value={30}>입사일순</MenuItem>
+            <MenuItem value={'department'}>부서순</MenuItem>
+            <MenuItem value={'job_title'}>직책순</MenuItem>
+            <MenuItem value={'hire_date'}>입사일순</MenuItem>
           </Select>
         </FormControl>
       </div>
