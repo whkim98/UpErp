@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const HumanResource = () => {
   const [employees, setEmployees] = useState([]);
@@ -8,13 +9,9 @@ const HumanResource = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch('/api/employees'); // 데이터 가져오기
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json(); // JSON 형태로 변환
-        console.log('Fetched employees data:', data); // 콘솔에 데이터 출력
-        setEmployees(data); // 상태에 데이터 저장
+        const response = await axios.get('/api/employees'); // 데이터 가져오기
+        console.log('Fetched employees data:', response.data); // 콘솔에 데이터 출력
+        setEmployees(response.data); // 상태에 데이터 저장
       } catch (error) {
         console.error('Error fetching employees:', error); // 콘솔에 에러 출력
         setError(error.message); // 에러 메시지 저장
