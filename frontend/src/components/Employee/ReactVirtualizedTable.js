@@ -7,22 +7,34 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { TableVirtuoso } from 'react-virtuoso';
+import SearchIcon from '@mui/icons-material/Search';
+import { FormControl, InputLabel, MenuItem, Select, alpha, styled } from '@mui/material';
+import InputBase from '@mui/material/InputBase';
 
 // 테이블 열 정의
 const columns = [
-  { width: 150, label: 'First Name', dataKey: 'first_name' },
-  { width: 150, label: 'Last Name', dataKey: 'last_name' },
-  { width: 200, label: 'Email', dataKey: 'email' },
-  { width: 150, label: 'Phone', dataKey: 'phone' },
-  { width: 150, label: 'Hire Date', dataKey: 'hire_date' },
-  { width: 150, label: 'Job Title', dataKey: 'job_title' },
-  { width: 150, label: 'Department', dataKey: 'department' },
-  { width: 120, label: 'Salary', dataKey: 'salary', numeric: true },
+    { width: 100, label: 'First Name', dataKey: 'first_name' }, 
+    { width: 100, label: 'Last Name', dataKey: 'last_name' }, 
+    { width: 150, label: 'Email', dataKey: 'email' }, 
+    { width: 100, label: 'Phone', dataKey: 'phone' }, 
+    { width: 100, label: 'Hire Date', dataKey: 'hire_date' }, 
+    { width: 100, label: 'Job Title', dataKey: 'job_title' }, 
+    { width: 100, label: 'Department', dataKey: 'department' }, 
+    { width: 80, label: 'Salary', dataKey: 'salary', numeric: true }, 
 ];
 
 // 데이터 생성 함수
 function createData(id, first_name, last_name, email, phone, hire_date, job_title, department, salary) {
   return { id, first_name, last_name, email, phone, hire_date, job_title, department, salary };
+}
+
+// 날짜 포맷팅 함수
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 월을 2자리로
+  const day = String(date.getDate()).padStart(2, '0'); // 일을 2자리로
+  return `${year}-${month}-${day}`;
 }
 
 // 가상화 테이블 구성 요소
@@ -47,8 +59,8 @@ function fixedHeaderContent() {
           key={column.dataKey}
           variant="head"
           align={column.numeric ? 'right' : 'left'}
-          style={{ width: column.width }}
-          sx={{ backgroundColor: 'background.paper' }}
+          style={{ width: column.width, fontWeight: 'bold', fontSize: '1rem' }} // 굵고 큰 글씨 스타일
+          sx={{ backgroundColor: 'background.paper', borderBottom: '2px solid #ccc' }} // 배경색과 하단 테두리
         >
           {column.label}
         </TableCell>
@@ -66,7 +78,9 @@ function rowContent(index, row) {
           key={column.dataKey}
           align={column.numeric ? 'right' : 'left'}
         >
-          {row[column.dataKey]}
+          {column.dataKey === 'hire_date'
+            ? formatDate(row[column.dataKey]) // hire_date 포맷팅
+            : row[column.dataKey]}
         </TableCell>
       ))}
     </React.Fragment>
@@ -75,14 +89,87 @@ function rowContent(index, row) {
 
 // 테이블 컴포넌트
 export default function ReactVirtualizedTable({ data }) {
+    
+    const Search = styled('div')(({ theme }) => ({
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
+        },
+        marginRight: theme.spacing(2),
+        width: 'auto',
+    }));
+
+    const SearchIconWrapper = styled('div')(({ theme }) => ({
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }));
+
+    const StyledInputBase = styled(InputBase)(({ theme }) => ({
+        color: 'inherit',
+        width: '100%',
+        '& .MuiInputBase-input': {
+            padding: theme.spacing(1, 1, 1, 0),
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+            transition: theme.transitions.create('width'),
+            [theme.breakpoints.up('sm')]: {
+                width: '12ch',
+                '&:focus': {
+                    width: '20ch',
+                },
+            },
+        },
+    }));
+
+    const [age, setAge] = React.useState('');
+
+    const handleChange = (event) => {
+      setAge(event.target.value);
+    };
+
   return (
-    <Paper style={{ height: 600, width: '100%' }}>
-      <TableVirtuoso
-        data={data}
-        components={VirtuosoTableComponents}
-        fixedHeaderContent={fixedHeaderContent}
-        itemContent={rowContent}
-      />
-    </Paper>
+    <div style={{ display: 'flex', justifyContent: 'center', padding: '16px', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', width: '80%', marginBottom: '16px' }}>
+        <Search>
+            <SearchIconWrapper>
+                <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+            />
+        </Search>
+        <FormControl style={{ marginLeft: '16px', width: '150px' }}>
+          <InputLabel id="demo-simple-select-label">정렬</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age}
+            label="정렬"
+            onChange={handleChange}
+          >
+            <MenuItem value={10}>부서순</MenuItem>
+            <MenuItem value={20}>직책순</MenuItem>
+            <MenuItem value={30}>입사일순</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+        
+      <Paper style={{ height: 400, width: '80%' }}> {/* Paper의 width를 80%로 설정 */}
+        <TableVirtuoso
+          data={data}
+          components={VirtuosoTableComponents}
+          fixedHeaderContent={fixedHeaderContent}
+          itemContent={rowContent}
+          style={{ width: '100%' }} // TableVirtuoso의 width를 100%로 설정
+        />
+      </Paper>
+    </div>
   );
 }
