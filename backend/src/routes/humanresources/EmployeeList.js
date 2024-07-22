@@ -29,11 +29,24 @@ router.get('/employees', (req, res) => {
 });
 
 router.get('/orderby/employees', (req, res) => {
-    const departmentQuery = 'SELECT * FROM employees order by department';
-    const jobTitleQuery = 'SELECT * FROM employees order by job_title';
-    const hireDateQuery = 'SELECT * FROM employees order by hire_date';
+    const { order } = req.query;
 
+    let query = 'SELECT * FROM employees';
+    if (order) {
+        query += ` ORDER BY ${connection.escapeId(order)}`; // 사용자 입력을 안전하게 처리하기 위해 escapeId 사용
+    }
 
-})
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error executing query: ' + err.stack);
+            res.status(500).json({ error: 'Database query failed' });
+            return;
+        }
+
+        res.setHeader('Cache-Control', 'no-store');
+        res.json(results);
+        console.log('Query Results:', results);
+    });
+});
 
 export default router;
