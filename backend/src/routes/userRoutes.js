@@ -17,7 +17,6 @@ router.post('/loginCheck', (req, res) => {
     connection.query(query, [email, employee_pw], (error, results) => {
         if (error) {
             console.error('Error executing query:', error);
-            alert("로그인 실패!");
             return res.status(500).json({ error: 'Database query error' });
         }
 
