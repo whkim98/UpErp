@@ -19,8 +19,12 @@ router.get('/employees', (req, res) => {
             return;
         }
 
+        // 캐시 제어 헤더 추가
+        res.setHeader('Cache-Control', 'no-store');
+
         // 쿼리 결과를 JSON 형식으로 응답
         res.json(results);
+        console.log('Query Results:', results);
     });
 });
 
