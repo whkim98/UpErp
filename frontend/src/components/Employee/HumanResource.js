@@ -35,7 +35,7 @@ const HumanResource = () => {
         <ul>
           {employees.map((employee) => (
             <li key={employee.employee_id}>
-              {employee.email} - {employee.employee_pw}
+              {employee.email} - {employee.employee_pw} - {employee.last_name}
             </li>
           ))}
         </ul>
