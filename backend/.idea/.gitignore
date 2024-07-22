@@ -10,3 +10,8 @@
 node_modules/
 
 .babel.7.24.9.development.json/
+
+# Babel cache
+node_modules/.cache/
+
+

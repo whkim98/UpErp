@@ -3,6 +3,7 @@ import cors from 'cors';
 import session from 'express-session'; // express-session 추가
 import userRoutes from './routes/userRoutes.js';
 import d3TestRoutes from './routes/d3Test.js';
+import EmployeeList from './routes/humanresources/EmployeeList.js';
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +25,7 @@ app.use(express.json());
 // 라우터 사용
 app.use('/api', userRoutes);
 app.use('/api', d3TestRoutes);
+app.use('/api', EmployeeList);
 
 // 서버 시작
 app.listen(PORT, () => {
