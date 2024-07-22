@@ -1,16 +1,12 @@
-import SearchIcon from '@mui/icons-material/Search';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Box, Button, TextField, Modal, Typography, Avatar, Stack } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { Box, Button, TextField } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { AccountCircle } from '@mui/icons-material';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
-import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -27,13 +23,21 @@ const style = {
 const Main = () => {
     const [email, setEmail] = useState('');
     const [employee_pw, setEmployee_pw] = useState('');
+    const [employee, setEmployee] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [open, setOpen] = useState(false);
 
+    const navigate = useNavigate();
+
+    // 로그인 체크
     const loginCheck = async () => {
         try {
             const response = await axios.post('http://localhost:3000/api/loginCheck', { email, employee_pw });
             if (response.data.success) {
                 console.log('Login successful');
-                alert('로그인되었습니다.');
+                alert(`로그인되었습니다.`);
+                setEmployee(response.data.employee);
+                setIsLoggedIn(true); // 로그인 상태 업데이트
                 handleClose();
             } else {
                 console.log('Login failed');
@@ -47,15 +51,44 @@ const Main = () => {
         }
     };
 
-    const [open, setOpen] = useState(false);
+    // 로그아웃
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('http://localhost:3000/api/logout');
+            if (response.data.success) {
+                console.log('Logout successful');
+                setEmployee(null);
+                setIsLoggedIn(false); // 로그아웃 상태 업데이트
+                alert('로그아웃되었습니다.');
+            }
+        } catch (error) {
+            console.error('Error during logout:', error);
+            alert('로그아웃 실패');
+        }
+    };
+
+    // 세션 상태 확인
+    const checkSession = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/api/currentUser');
+            if (response.data.success) {
+                setEmployee(response.data.user);
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+        } catch (error) {
+            console.error('Error checking session:', error);
+            setIsLoggedIn(false);
+        }
+    };
+
+    useEffect(() => {
+        checkSession(); // 컴포넌트가 마운트될 때 세션 상태 확인
+    }, []);
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    const navigate = useNavigate();
-
-    const mvPage = (path) => {
-        navigate(path);
-    };
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -111,19 +144,21 @@ const Main = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Button style={{ color: 'black' }} onClick={() => mvPage('/employee-management')}>인사관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => mvPage('/client-management')}>거래처관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => mvPage('/item-management')}>품목관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => mvPage('/purchase-management')}>구매관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => mvPage('/sales-management')}>판매관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => navigate('/employee-management')}>인사관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => navigate('/client-management')}>거래처관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => navigate('/item-management')}>품목관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => navigate('/purchase-management')}>구매관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => navigate('/sales-management')}>판매관리</Button>
                 </Box>
 
                 <Box>
                     <Stack direction="row" spacing={2} style={{ marginRight: '20px', marginTop: '5px' }}>
-                        <Avatar alt="Image" src="../image/noimage1.png" />
-
-                        {/* 모달로 로그인 */}
-                        <Button onClick={handleOpen} style={{ border: '1px solid', color: 'black' }}>Login</Button>
+                        <Avatar alt={employee ? employee.last_name : ""} src="/static/images/avatar/1.jpg" />
+                        {isLoggedIn ? (
+                            <Button onClick={handleLogout} style={{ border: '1px solid', color: 'black' }}>Logout</Button>
+                        ) : (
+                            <Button onClick={handleOpen} style={{ border: '1px solid', color: 'black' }}>Login</Button>
+                        )}
                         <Modal
                             open={open}
                             onClose={handleClose}
@@ -134,27 +169,38 @@ const Main = () => {
                                     Login
                                 </Typography>
                                 <Box id="modal-modal-description" sx={{ mt: 2 }}>
-
                                     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                         <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                        <TextField id="input-with-sx" label="E-MAIL" variant="standard"
-                                            value={email} onChange={(e) => setEmail(e.target.value)} />
+                                        <TextField
+                                            id="input-with-sx"
+                                            label="E-MAIL"
+                                            variant="standard"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
                                     </Box>
-
                                     <Box sx={{ display: 'flex', alignItems: 'flex-end', mt: 2 }}>
                                         <KeyIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                        <TextField id="input-with-sx" label="PASSWORD" variant="standard" type="password"
-                                            value={employee_pw} onChange={(e) => setEmployee_pw(e.target.value)} />
+                                        <TextField
+                                            id="input-with-sx"
+                                            label="PASSWORD"
+                                            variant="standard"
+                                            type="password"
+                                            value={employee_pw}
+                                            onChange={(e) => setEmployee_pw(e.target.value)}
+                                        />
                                     </Box>
-
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-                                        <Button style={{ border: '1px solid', color: 'black' }}
-                                            onClick={loginCheck}>제출</Button>
+                                        <Button
+                                            style={{ border: '1px solid', color: 'black' }}
+                                            onClick={loginCheck}
+                                        >
+                                            제출
+                                        </Button>
                                     </Box>
                                 </Box>
                             </Box>
                         </Modal>
-
                     </Stack>
                 </Box>
             </Box>
