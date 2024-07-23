@@ -1,7 +1,7 @@
-// userRoutes.js
 import express from 'express';
 import connection from '../db/connection.js';
 import bodyParser from 'body-parser';
+import bcrypt from 'bcrypt'; // bcrypt 라이브러리 임포트
 
 const router = express.Router();
 
@@ -13,18 +13,25 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.post('/loginCheck', (req, res) => {
     const { email, employee_pw } = req.body;
 
-    const query = 'SELECT email, last_name FROM employees WHERE email = ? AND employee_pw = ?';
-
-    connection.query(query, [email, employee_pw], (error, results) => {
+    // 이메일로 사용자 조회
+    const query = 'SELECT email, last_name, employee_pw FROM employees WHERE email = ?';
+    connection.query(query, [email], async (error, results) => {
         if (error) {
             console.error('쿼리 에러:', error);
             return res.status(500).json({ error: 'Database query error' });
         }
 
         if (results.length > 0) {
-            const employee = results[0];
-            req.session.user = { id: employee.id, lastName: employee.last_name };
-            res.json({ success: true, employee });
+            const user = results[0];
+
+            // 입력된 비밀번호와 저장된 해시 비밀번호 비교
+            const match = await bcrypt.compare(employee_pw, user.employee_pw);
+            if (match) {
+                req.session.user = { id: user.id, lastName: user.last_name };
+                res.json({ success: true, user: req.session.user });
+            } else {
+                res.status(401).json({ error: 'Invalid credentials' });
+            }
         } else {
             res.status(401).json({ error: 'Invalid credentials' });
         }
