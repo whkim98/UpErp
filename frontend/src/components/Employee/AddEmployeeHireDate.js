@@ -1,10 +1,10 @@
 import moment from 'moment';
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // 기본 스타일 import
-import styled from 'styled-components'; // styled-components를 사용하는 경우
+import 'react-calendar/dist/Calendar.css';
+import styled from 'styled-components';
 
-// StyledCalendarWrapper와 StyledCalendar 정의
+// 스타일링된 캘린더 래퍼
 const StyledCalendarWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -13,6 +13,7 @@ const StyledCalendarWrapper = styled.div`
   line-height: 5rem; /* 숫자의 위아래 간격 조정 */
 `;
 
+// 스타일링된 캘린더 컴포넌트
 const StyledCalendar = styled(Calendar)`
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -21,33 +22,37 @@ const StyledCalendar = styled(Calendar)`
   margin-right: 50px;
 `;
 
-const CalendarComponent = () => {
+const AddEmployeeHireDate = ({ handleDateChange }) => {
   const [date, setDate] = useState(new Date());
 
-  const handleDateChange = (newDate) => {
+  // 날짜 변경 핸들러
+  const onDateChange = (newDate) => {
     setDate(newDate);
+    if (handleDateChange) {
+      handleDateChange(newDate); // 부모 컴포넌트에 선택된 날짜 전달
+    }
   };
 
   return (
     <div>
-        <h1 style={{marginLeft: '20px', fontSize: '20px'}}>Hire_Date</h1>
+      <h1 style={{ marginLeft: '20px', fontSize: '20px' }}>Hire Date</h1>
       <StyledCalendarWrapper>
         <StyledCalendar
           value={date}
-          onChange={handleDateChange}
-          formatDay={(locale, date) => moment(date).format("D")} // 일 제거 숫자만 보이게
-          formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션 눌렀을때 숫자 년도만 보이게
-          formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")} // 네비게이션에서 2023. 12 이렇게 보이도록 설정
-          calendarType="gregory" // 일요일 부터 시작
-          showNeighboringMonth={false} // 전달, 다음달 날짜 숨기기
-          next2Label={null} // +1년 & +10년 이동 버튼 숨기기
-          prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
-          minDetail="year" // 10년단위 년도 숨기기
+          onChange={onDateChange}
+          formatDay={(locale, date) => moment(date).format("D")} // 일 숫자만 보이게
+          formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션에서 년도만 보이게
+          formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")} // 월과 연도 형식
+          calendarType="gregory" // 그레고리력 사용
+          showNeighboringMonth={false} // 이웃 월 날짜 숨기기
+          next2Label={null} // +1년, +10년 버튼 숨기기
+          prev2Label={null} // -1년, -10년 버튼 숨기기
+          minDetail="year" // 년 단위만 보기
         />
       </StyledCalendarWrapper>
-      <p style={{marginLeft: '20px'}}>선택 날짜: {date.toDateString()}</p>
+      <p style={{ marginLeft: '20px' }}>선택날짜: {date.toDateString()}</p>
     </div>
   );
 };
 
-export default CalendarComponent;
+export default AddEmployeeHireDate;

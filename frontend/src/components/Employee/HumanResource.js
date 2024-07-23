@@ -54,7 +54,7 @@ const HumanResource = () => {
   return (
     <div>
         <ReactVirtualizedTable data={employees} />
-        <Button style={{color: 'black'}} onClick={() => handleNavigation('/addEmployee')}>사원추가</Button>
+        <Button style={{color: 'black', border: '1px solid', marginLeft: '15px'}} onClick={() => handleNavigation('/addEmployee')}>Add</Button>
     </div>
   );
 };
