@@ -34,7 +34,7 @@ function formatDate(dateString) {
   const date = new Date(dateString);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0'); // 월을 2자리로
-  const day = String(date.getDate()).padStart(2, '0'); // 일을 2자리로
+  const day = String(date.getDate()).padStart(2, '0'); 
   return `${year}-${month}-${day}`;
 }
 
@@ -60,8 +60,8 @@ function fixedHeaderContent() {
           key={column.dataKey}
           variant="head"
           align={column.numeric ? 'right' : 'left'}
-          style={{ width: column.width, fontWeight: 'bold', fontSize: '1rem' }} // 굵고 큰 글씨 스타일
-          sx={{ backgroundColor: 'background.paper', borderBottom: '2px solid #ccc' }} // 배경색과 하단 테두리
+          style={{ width: column.width, fontWeight: 'bold', fontSize: '1rem' }} 
+          sx={{ backgroundColor: 'background.paper', borderBottom: '2px solid #ccc' }}
         >
           {column.label}
         </TableCell>
@@ -91,7 +91,7 @@ function rowContent(index, row) {
 // 테이블 컴포넌트
 export default function ReactVirtualizedTable({ data: initialData }) {
     const [order, setOrder] = useState('');
-    const [tableData, setTableData] = useState(initialData); // 상태 변수 이름 변경
+    const [tableData, setTableData] = useState(initialData); 
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -139,7 +139,7 @@ export default function ReactVirtualizedTable({ data: initialData }) {
                 params: { order: selectedOrder }
             });
             console.log('데이터', response.data);
-            setTableData(response.data); // 데이터 상태 업데이트
+            setTableData(response.data); 
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -173,13 +173,13 @@ export default function ReactVirtualizedTable({ data: initialData }) {
                 </FormControl>
             </div>
             
-            <Paper style={{ height: 400, width: '80%' }}> {/* Paper의 width를 80%로 설정 */}
+            <Paper style={{ height: 400, width: '80%' }}> 
                 <TableVirtuoso
                     data={tableData} // 상태로부터 데이터를 전달
                     components={VirtuosoTableComponents}
                     fixedHeaderContent={fixedHeaderContent}
                     itemContent={rowContent}
-                    style={{ width: '100%' }} // TableVirtuoso의 width를 100%로 설정
+                    style={{ width: '100%' }}
                 />
             </Paper>
         </div>

@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactVirtualizedTable from './ReactVirtualizedTable'; // 경로를 맞춰주세요
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const HumanResource = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleNavigation = async(path) => {
+    navigate(path);
+  }
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -44,7 +52,10 @@ const HumanResource = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <ReactVirtualizedTable data={employees} />
+    <div>
+        <ReactVirtualizedTable data={employees} />
+        <Button style={{color: 'black'}} onClick={() => handleNavigation('/addEmployee')}>사원추가</Button>
+    </div>
   );
 };
 
