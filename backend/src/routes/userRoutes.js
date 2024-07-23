@@ -18,7 +18,7 @@ router.post('/loginCheck', (req, res) => {
     connection.query(query, [email], async (error, results) => {
         if (error) {
             console.error('쿼리 에러:', error);
-            return res.status(500).json({ error: 'Database query error' });
+            return res.status(500).json({ error: '쿼리에러' });
         }
 
         if (results.length > 0) {
@@ -30,10 +30,10 @@ router.post('/loginCheck', (req, res) => {
                 req.session.user = { id: user.id, lastName: user.last_name };
                 res.json({ success: true, user: req.session.user });
             } else {
-                res.status(401).json({ error: 'Invalid credentials' });
+                res.status(401).json({ error: '패스워드해싱 에러' });
             }
         } else {
-            res.status(401).json({ error: 'Invalid credentials' });
+            res.status(401).json({ error: '패스워드 해싱' });
         }
     });
 });
@@ -51,7 +51,7 @@ router.get('/currentUser', (req, res) => {
 router.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            return res.status(500).json({ error: 'Failed to logout' });
+            return res.status(500).json({ error: '로그아웃 실패' });
         }
         res.json({ success: true });
     });

@@ -14,8 +14,8 @@ router.get('/employees', (req, res) => {
     // 쿼리 실행
     connection.query(query, (err, results) => {
         if (err) {
-            console.error('Error executing query: ' + err.stack);
-            res.status(500).json({ error: 'Database query failed' });
+                console.error('쿼리에러: ' + err.stack);
+            res.status(500).json({ error: '쿼리에러' });
             return;
         }
 
@@ -24,7 +24,7 @@ router.get('/employees', (req, res) => {
 
         // 쿼리 결과를 JSON 형식으로 응답
         res.json(results);
-        console.log('Query Results:', results);
+        console.log('리스트:', results);
     });
 });
 
@@ -38,14 +38,14 @@ router.get('/orderby/employees', (req, res) => {
 
     connection.query(query, (err, results) => {
         if (err) {
-            console.error('Error executing query: ' + err.stack);
-            res.status(500).json({ error: 'Database query failed' });
+            console.error('쿼리에러: ' + err.stack);
+            res.status(500).json({ error: '쿼리에러' });
             return;
         }
 
         res.setHeader('Cache-Control', 'no-store');
         res.json(results);
-        console.log('Query Results:', results);
+        console.log('정렬리스트:', results);
     });
 });
 
