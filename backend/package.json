@@ -12,10 +12,15 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "connect-redis": "^7.1.1",
+    "connect-session-sequelize": "^7.1.7",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "express-mysql-session": "^3.0.3",
     "express-session": "^1.18.0",
-    "mysql2": "^3.10.3"
+    "mysql2": "^3.10.3",
+    "redis": "^4.6.15",
+    "sequelize": "^6.37.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
