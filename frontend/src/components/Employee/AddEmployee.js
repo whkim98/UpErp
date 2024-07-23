@@ -50,7 +50,7 @@ const AddEmployee = () => {
                 navigate(-1);
             })
             .catch(error => {
-                console.error('There was an error!', error);
+                console.error('에러메세지: ', error);
             });
     };
 

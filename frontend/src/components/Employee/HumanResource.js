@@ -38,7 +38,7 @@ const HumanResource = () => {
         
         setEmployees(formattedData); // 상태에 데이터 저장
       } catch (error) {
-        console.error('Error fetching employees:', error); // 콘솔에 에러 출력
+        console.error('에러메세지: ', error); // 콘솔에 에러 출력
         setError(error.message); // 에러 메시지 저장
       } finally {
         setLoading(false); // 로딩 상태 종료
@@ -49,7 +49,7 @@ const HumanResource = () => {
   }, []); // 빈 배열은 컴포넌트가 마운트될 때만 실행됨
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p>에러메세지: {error}</p>;
 
   return (
     <div>
