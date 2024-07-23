@@ -4,6 +4,7 @@ import Main from './Main';
 import EmployeeManagement from './components/Employee/EmployeeManagement';
 import LoginForm from './components/Login/LoginForm';
 import HumanResource from './components/Employee/HumanResource';
+import AddEmployee from './components/Employee/AddEmployee';
 // import EmployeeManagement from './EmployeeManagement';
 // import ClientManagement from './ClientManagement';
 // import ItemManagement from './ItemManagement';
@@ -22,6 +23,7 @@ const Root = () => {
                 <Route path="/sales-management" element={<SalesManagement />} /> */}
                 <Route path="/loginform" element={<LoginForm/>}/>
                 <Route path='/humanresources' element={<HumanResource/>}/>
+                <Route path='/addEmployee' element={<AddEmployee/>}/>
             </Routes>
         </Router>
     );
