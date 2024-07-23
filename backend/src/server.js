@@ -4,6 +4,7 @@ import session from 'express-session'; // express-session 추가
 import userRoutes from './routes/userRoutes.js';
 import d3TestRoutes from './routes/d3Test.js';
 import EmployeeList from './routes/humanresources/EmployeeList.js';
+import AddEmployee from './routes/humanresources/AddEmployee.js';
 
 const app = express();
 const PORT = 3000;
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/api', userRoutes);
 app.use('/api', d3TestRoutes);
 app.use('/api', EmployeeList);
+app.use('/api', AddEmployee);
 
 // 서버 시작
 app.listen(PORT, () => {
