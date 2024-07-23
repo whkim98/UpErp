@@ -32,15 +32,15 @@ router.post('/addEmployee', async (req, res) => {
         const sql = 'INSERT INTO employees SET ?';
         connection.query(sql, employee, (err, result) => {
             if (err) {
-                console.error('Error inserting employee:', err);
-                res.status(500).send('Error inserting employee');
+                console.error('에러:', err);
+                res.status(500).send('에러');
             } else {
-                res.status(200).send('Employee added successfully');
+                res.status(200).send('insert 성공');
             }
         });
     } catch (err) {
-        console.error('Error hashing password:', err);
-        res.status(500).send('Error hashing password');
+        console.error('패스워드 해싱 에러:', err);
+        res.status(500).send('패스워드 해싱');
     }
 });
 
