@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // useLocation 임포트
 import axios from 'axios';
-import { Box, Button, TextField, Modal, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Button, TextField, Modal, Typography, Stack, Menu, MenuItem, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -22,9 +22,18 @@ const style = {
 };
 
 const Main = () => {
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const handleMenu = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClosee = () => {
+      setAnchorEl(null);
+    };
+
     const [email, setEmail] = useState('');
     const [employee_pw, setEmployee_pw] = useState('');
-    const [employee, setEmployee] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -38,7 +47,6 @@ const Main = () => {
             if (response.data.success) {
                 console.log('Login successful');
                 alert(`로그인되었습니다.`);
-                setEmployee(response.data.employee);
                 setIsLoggedIn(true); // 로그인 상태 업데이트
                 handleClose();
             } else {
@@ -59,7 +67,6 @@ const Main = () => {
             const response = await axios.post('/api/logout');
             if (response.data.success) {
                 console.log('Logout successful');
-                setEmployee(null);
                 setIsLoggedIn(false); // 로그아웃 상태 업데이트
                 alert('로그아웃되었습니다.');
             }
@@ -74,7 +81,6 @@ const Main = () => {
         try {
             const response = await axios.get('/api/currentUser');
             if (response.data.success) {
-                setEmployee(response.data.user);
                 setIsLoggedIn(true);
             } else {
                 setIsLoggedIn(false);
@@ -184,7 +190,34 @@ const Main = () => {
 
                 <Box>
                     <Stack direction="row" spacing={2} style={{ marginRight: '20px', marginTop: '5px' }}>
-                        <Avatar alt={employee ? employee.last_name : ""} src="/static/images/avatar/1.jpg" />
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClosee}
+                    >
+                        <MenuItem onClick={handleClosee}>Profile</MenuItem>
+                        <MenuItem onClick={handleClosee}>My account</MenuItem>
+                    </Menu>
                         {isLoggedIn ? (
                             <Button onClick={handleLogout} style={{ border: '1px solid', color: 'black' }}>Logout</Button>
                         ) : (

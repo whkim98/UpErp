@@ -19,11 +19,16 @@ const AddEmployee = () => {
         phone: '',
         job_title: '',
         hire_date: new Date(),
-        employee_pw: '', // 추가된 필드
+        employee_pw: '', 
     });
 
     const defaultProps = {
         options: top100Films,
+        getOptionLabel: (option) => option.title,
+    };
+
+    const jobProps = {
+        options: job_title,
         getOptionLabel: (option) => option.title,
     };
 
@@ -44,7 +49,35 @@ const AddEmployee = () => {
     };
 
     const handleSubmit = () => {
-        axios.post('/api/addEmployee', formData)
+        // Job title에 따른 salary 설정
+        let salary = 0;
+        switch (formData.job_title) {
+            case '팀원':
+                salary = 3000000;
+                break;
+            case '팀장':
+                salary = 4500000;
+                break;
+            case '과장':
+                salary = 5000000;
+                break;
+            case '상무':
+                salary = 6000000;
+                break;
+            case '사장':
+                salary = 10000000;
+                break;
+            default:
+                salary = 0;
+        }
+
+        // salary를 포함한 formData 생성
+        const employeeData = {
+            ...formData,
+            salary: salary,
+        };
+
+        axios.post('/api/addEmployee', employeeData)
             .then(response => {
                 console.log(response.data);
                 navigate(-1);
@@ -121,9 +154,17 @@ const AddEmployee = () => {
                     </tr>
                     <tr>
                         <td>
-                            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                 <WorkOutlineIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                <TextField id="job_title" label="Job Title" variant="standard" style={{ width: '347px' }} onChange={handleInputChange} />
+                                <Autocomplete
+                                    {...jobProps}
+                                    id="job_title"
+                                    disableCloseOnSelect
+                                    onChange={(event, newValue) => setFormData({ ...formData, job_title: newValue?.title || '' })}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Job Title" variant="standard" style={{ width: '150px' }} />
+                                    )}
+                                />
                             </Box>
                         </td>
                     </tr>
@@ -147,6 +188,14 @@ const top100Films = [
     { title: '재무팀' },
     { title: '인사팀' },
     { title: '물류팀' },
+];
+
+const job_title = [
+    { title: '팀원' },
+    { title: '팀장' },
+    { title: '상무' },
+    { title: '과장' },
+    { title: '사장' },
 ];
 
 const email = [
