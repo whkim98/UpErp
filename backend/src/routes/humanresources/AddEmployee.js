@@ -10,8 +10,9 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.post('/addEmployee', async (req, res) => {
-    const { first_name, last_name, department, email, phone, job_title, hire_date, employee_pw } = req.body;
+    const { first_name, last_name, department, email, phone, job_title, hire_date, employee_pw, salary } = req.body;
 
+    console.log(req.body);
     try {
         // 비밀번호 해시화
         const hashedPassword = await bcrypt.hash(employee_pw, 10);
@@ -26,7 +27,8 @@ router.post('/addEmployee', async (req, res) => {
             phone: phone,
             hire_date: formattedHireDate,
             job_title: job_title,
-            employee_pw: hashedPassword // 해시화된 비밀번호
+            employee_pw: hashedPassword, // 해시화된 비밀번호
+            salary: salary,
         };
 
         const sql = 'INSERT INTO employees SET ?';
