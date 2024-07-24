@@ -56,7 +56,7 @@ const Main = () => {
     // 로그아웃
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/logout');
+            const response = await axios.post('/api/logout');
             if (response.data.success) {
                 console.log('Logout successful');
                 setEmployee(null);
