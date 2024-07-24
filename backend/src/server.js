@@ -54,6 +54,7 @@ app.use(
         store: sessionStore,
         cookie: {
             secure: false, // HTTPS를 사용하지 않는 경우 false
+            httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000 // 쿠키 만료 시간 (24시간)
         }
     })
