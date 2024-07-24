@@ -29,6 +29,10 @@ const Attendance = () => {
     setDate(newDate);
   };
 
+  const formatDate = (date) => {
+    return date.toISOString().split('T')[0];
+  };
+
   return (
     <div>
       <StyledCalendarWrapper>
@@ -45,7 +49,8 @@ const Attendance = () => {
           minDetail="year" // 10년단위 년도 숨기기
         />
       </StyledCalendarWrapper>
-      <p>선택 날짜: {date.toDateString()}</p>
+      <p style={{display: 'flex', alignItems: 'center', 
+                    justifyContent: 'center' }}>선택 날짜: {formatDate(date)}</p>
     </div>
   );
 };
