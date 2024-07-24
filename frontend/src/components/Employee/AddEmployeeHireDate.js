@@ -33,6 +33,10 @@ const AddEmployeeHireDate = ({ handleDateChange }) => {
     }
   };
 
+  const formatDate = (date) => {
+    return date.toISOString().split('T')[0];
+  };
+
   return (
     <div>
       <h1 style={{ marginLeft: '20px', fontSize: '20px' }}>Hire Date</h1>
@@ -50,7 +54,7 @@ const AddEmployeeHireDate = ({ handleDateChange }) => {
           minDetail="year" // 년 단위만 보기
         />
       </StyledCalendarWrapper>
-      <p style={{ marginLeft: '20px' }}>선택날짜: {date.toDateString()}</p>
+      <p style={{ marginLeft: '20px' }}>선택 날짜: {formatDate(date)}</p>
     </div>
   );
 };

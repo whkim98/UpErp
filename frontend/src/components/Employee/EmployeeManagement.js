@@ -19,22 +19,36 @@ const EmployeeManagement = () => {
 
     return (
         <div>
-            <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }} style={{ width: '100%', marginLeft: '20px' }}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }} >
+            <Box 
+                sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    width: '100%', 
+                    margin: '20px 0' 
+                }}
+            >
+                <Box 
+                    sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center' 
+                    }}
+                >
                     <Button
                         style={getButtonStyle('HumanResource')}
                         onClick={() => handleNavigation('HumanResource')}
                     >
                         인사관리
                     </Button>
-                    &nbsp;
+                    &nbsp;&nbsp;
                     <Button
                         style={getButtonStyle('Attendance')}
                         onClick={() => handleNavigation('Attendance')}
                     >
                         근태관리
                     </Button>
-                    &nbsp;
+                    &nbsp;&nbsp;
                     <Button
                         style={getButtonStyle('Allowance')}
                         onClick={() => handleNavigation('Allowance')}
