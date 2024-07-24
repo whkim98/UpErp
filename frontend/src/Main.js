@@ -34,7 +34,7 @@ const Main = () => {
     // 로그인 체크
     const loginCheck = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/loginCheck', { email, employee_pw });
+            const response = await axios.post('/api/loginCheck', { email, employee_pw });
             if (response.data.success) {
                 console.log('Login successful');
                 alert(`로그인되었습니다.`);
@@ -72,7 +72,7 @@ const Main = () => {
     // 세션 상태 확인
     const checkSession = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/currentUser');
+            const response = await axios.get('/api/currentUser');
             if (response.data.success) {
                 setEmployee(response.data.user);
                 setIsLoggedIn(true);
