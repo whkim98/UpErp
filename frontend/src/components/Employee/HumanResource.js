@@ -5,6 +5,10 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const HumanResource = () => {
+
+  
+
+
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -51,10 +55,12 @@ const HumanResource = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>에러메세지: {error}</p>;
 
+
   return (
     <div>
         <ReactVirtualizedTable data={employees} />
         <Button style={{color: 'black', border: '1px solid', marginLeft: '15px'}} onClick={() => handleNavigation('/addEmployee')}>Add</Button>
+        
     </div>
   );
 };
