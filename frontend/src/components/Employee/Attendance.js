@@ -1,6 +1,6 @@
 // Attendance.js
 import moment from 'moment';
-import React, { useState, useEffect } from 'react';
+import React, { useState, } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // 기본 스타일 import
 import styled from 'styled-components'; // styled-components를 사용하는 경우
@@ -46,6 +46,13 @@ const Attendance = () => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [sessionInfo, setSessionInfo] = useState(null);
+
+  const attendanceInsert = () => {
+    axios.get('/api/attendanceInsert')
+    .then(response => {
+        //여기 해야 함@@@@@@
+    });
+  };
 
   const handleDateChange = (newDate) => {
     setDate(newDate);
@@ -112,15 +119,15 @@ const Attendance = () => {
                   {sessionInfo ? (
                     <>
                       <ListItem>
-                        <ListItemText primary={sessionInfo.name} />
+                        <ListItemText primary={'Name: ' + sessionInfo.last_name + sessionInfo.first_name} />
                       </ListItem>
                       <Divider component="li" />
                       <ListItem>
-                        <ListItemText primary={sessionInfo.email} />
+                        <ListItemText primary={'E-Mail: ' + sessionInfo.email} />
                       </ListItem>
-                      <Divider variant="inset" component="li" />
+                      <Divider component="li" />
                       <ListItem>
-                        <ListItemText primary={sessionInfo.department} />
+                        <ListItemText primary={'Department: ' + sessionInfo.department} />
                       </ListItem>
                     </>
                   ) : (
@@ -132,6 +139,7 @@ const Attendance = () => {
                   <br/>
                   <Button
                         style={{ border: '1px solid', color: 'black' }}
+                        onClick={() => attendanceInsert()}
                     >
                         출근확정
                     </Button>
