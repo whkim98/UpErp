@@ -24,10 +24,6 @@ const columns = [
     { width: 80, label: 'Salary', dataKey: 'salary', numeric: true }, 
 ];
 
-// 데이터 생성 함수
-function createData(id, first_name, last_name, email, phone, hire_date, job_title, department, salary) {
-  return { id, first_name, last_name, email, phone, hire_date, job_title, department, salary };
-}
 
 // 날짜 포맷팅 함수
 function formatDate(dateString) {
