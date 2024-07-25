@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoutes.js';
 import d3TestRoutes from './routes/d3Test.js';
 import EmployeeList from './routes/humanresources/EmployeeList.js';
 import AddEmployee from './routes/humanresources/AddEmployee.js';
+import Attendance from './routes/humanresources/Attendance.js';
 import cors from 'cors';
 import mysql from 'mysql2';
 
@@ -64,6 +65,7 @@ app.use('/api', userRoutes);
 app.use('/api', d3TestRoutes);
 app.use('/api', EmployeeList);
 app.use('/api', AddEmployee);
+app.use('/api', Attendance);
 
 app.listen(PORT, () => {
     console.log('서버 시작 성공!');
