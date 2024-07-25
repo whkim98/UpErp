@@ -11,7 +11,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.post('/loginCheck', async (req, res) => {
     const { email, employee_pw } = req.body;
 
-    const query = 'SELECT employee_id, email, first_name, last_name, employee_pw FROM employees WHERE email = ?';
+    const query = 'SELECT employee_id, email, first_name, last_name, employee_pw, department FROM employees WHERE email = ?';
     connection.query(query, [email], async (error, results) => {
         if (error) {
             console.error('쿼리 에러:', error);
@@ -26,8 +26,9 @@ router.post('/loginCheck', async (req, res) => {
                 req.session.user = {
                     id: user.employee_id,
                     email: user.email,
-                    firstName: user.first_name,
-                    lastName: user.last_name,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    department: user.department,
                 };
                 res.json({ success: true, user: req.session.user });
             } else {
@@ -63,6 +64,15 @@ router.post('/logout', (req, res) => {
             res.json({ success: true });
         });
     });
+});
+
+router.get('/sessionInfo', (req, res) => {
+    if (req.session && req.session.user) {
+        res.json(req.session.user);
+        console.log(req.session.user);
+    } else {
+        res.status(401).json({ message: '에러' });
+    }
 });
 
 export default router;
