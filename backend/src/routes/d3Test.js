@@ -1,7 +1,11 @@
 import express from 'express';
 import connection from '../db/connection.js';
+import bodyParser from 'body-parser';
 
 const router = express.Router();
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get('/sales', (req, res) => {
     const salesData = [
@@ -12,6 +16,7 @@ router.get('/sales', (req, res) => {
         { week: "Week 5", sales: 30 }
     ];
     res.json(salesData);
+    console.log(salesData);
 });
 
 export default router;
