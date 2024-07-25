@@ -30,7 +30,7 @@ const connection = mysql.createPool(mysqlOptions);
 
 const sessionStore = new MySQLStore(
     {
-        expiration: 24 * 60 * 60 * 1000,
+        expiration: 30 * 60 * 1000,
         createDatabaseTable: true,
         schema: {
             tableName: 'sessions',
@@ -55,7 +55,7 @@ app.use(
         cookie: {
             secure: false,
             httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000,
+            maxAge: 30 * 60 * 1000,
         },
     })
 );
