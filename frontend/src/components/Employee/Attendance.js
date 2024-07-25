@@ -47,11 +47,15 @@ const Attendance = () => {
   const [open, setOpen] = useState(false);
   const [sessionInfo, setSessionInfo] = useState(null);
 
-  const attendanceInsert = () => {
-    axios.get('/api/attendanceInsert')
-    .then(response => {
-        //여기 해야 함@@@@@@
-    });
+
+  const attendanceInsert = async () => {
+    try {
+      const response = await axios.get('/api/attendanceInsert');
+      setSessionInfo(response.data);
+    } catch (error) {
+      console.error('에러:', error);
+      setSessionInfo(null);
+    }
   };
 
   const handleDateChange = (newDate) => {
