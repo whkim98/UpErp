@@ -20,4 +20,14 @@ router.get('/clientList', (req, res) => {
    });
 });
 
+router.get('/clientItemList', (req, res) => {
+    const {supplier_id} = req.body;
+    let queryParams;
+    const sql = 'SELECT * FROM suppliers s LEFT JOIN purchase_orders po ON s.supplier_id = po. supplier_id LEFT JOIN purchase_order_items poi ON po.order_id = poi.order_id WHERE s.supplier_id = ?';
+    queryParams = [supplier_id];
+    connection.query(sql, queryParams, (err, result) => {
+        res.json(result);
+    });
+});
+
 export default router;
