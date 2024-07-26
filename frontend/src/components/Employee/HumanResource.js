@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ReactVirtualizedTable from './ReactVirtualizedTable'; // 경로를 맞춰주세요
+import ReactVirtualizedTable from './employeeListTable'; // 경로를 맞춰주세요
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
