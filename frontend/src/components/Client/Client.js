@@ -1,9 +1,10 @@
 import React from 'react';
+import ReactVirtualizedTable from './ReactVirtualizedTable';
 
 const Client = () => {
     return (
         <div>
-            clientjs
+            <ReactVirtualizedTable/>
         </div>
     );
 };
