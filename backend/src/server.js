@@ -6,7 +6,7 @@ import d3TestRoutes from './routes/d3Test.js';
 import EmployeeList from './routes/humanresources/EmployeeList.js';
 import AddEmployee from './routes/humanresources/AddEmployee.js';
 import Attendance from './routes/humanresources/Attendance.js';
-import ClientList from './routes/humanresources/ClientList.js';
+import ClientList from './routes/client/ClientList.js';
 import cors from 'cors';
 import mysql from 'mysql2';
 
