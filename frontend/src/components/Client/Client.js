@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactVirtualizedTable from './ReactVirtualizedTable';
+import ReactVirtualizedTable from './clientListTable';
 
 const Client = () => {
     return (
