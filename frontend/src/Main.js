@@ -181,10 +181,8 @@ const Main = () => {
                         />
                     </Search>
                     <Button style={{ color: 'black' }} onClick={() => handleNavigation('/employee-management')}>인사관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/client-management')}>거래처관리</Button>
+                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/client-management')}>거래관리</Button>
                     <Button style={{ color: 'black' }} onClick={() => handleNavigation('/item-management')}>품목관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/purchase-management')}>구매관리</Button>
-                    <Button style={{ color: 'black' }} onClick={() => handleNavigation('/sales-management')}>판매관리</Button>
                     <Button style={{ color: 'black' }} onClick={() => handleNavigation('/sales-management')}>공지사항</Button>
                 </Box>
 

@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Allowance = () => {
+const Client = () => {
     return (
         <div>
-            Allowance
+            clientjs
         </div>
     );
 };
 
-export default Allowance;
+export default Client;

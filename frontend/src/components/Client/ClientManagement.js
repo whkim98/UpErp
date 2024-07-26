@@ -1,10 +1,12 @@
 import { Box, Button } from '@mui/material';
 import React, { useState } from 'react';
-import HumanResource from './HumanResource';
-import Attendance from './Attendance';
+import Client from './Client';
+import Buy from './Buy';
+import Sale from './Sale';
 
-const EmployeeManagement = () => {
-    const [selectedComponent, setSelectedComponent] = useState('HumanResource'); 
+const ClientManagement = () => {
+
+    const [selectedComponent, setSelectedComponent] = useState('client'); 
 
     const handleNavigation = (component) => {
         setSelectedComponent(component);
@@ -18,7 +20,7 @@ const EmployeeManagement = () => {
 
     return (
         <div>
-            <Box 
+            <Box
                 sx={{ 
                     display: 'flex', 
                     alignItems: 'center', 
@@ -35,25 +37,33 @@ const EmployeeManagement = () => {
                     }}
                 >
                     <Button
-                        style={getButtonStyle('HumanResource')}
-                        onClick={() => handleNavigation('HumanResource')}
+                        style={getButtonStyle('buy')}
+                        onClick={() => handleNavigation('buy')}
                     >
-                        인사관리
+                        구매관리
                     </Button>
                     &nbsp;&nbsp;
                     <Button
-                        style={getButtonStyle('Attendance')}
-                        onClick={() => handleNavigation('Attendance')}
+                        style={getButtonStyle('sale')}
+                        onClick={() => handleNavigation('sale')}
                     >
-                        근태관리
+                        판매관리
+                    </Button>
+                    &nbsp;&nbsp;
+                    <Button
+                        style={getButtonStyle('client')}
+                        onClick={() => handleNavigation('client')}
+                    >
+                        거래처관리
                     </Button>
                     &nbsp;&nbsp;
                 </Box>
             </Box>
-            {selectedComponent === 'HumanResource' && <HumanResource />}
-            {selectedComponent === 'Attendance' && <Attendance />}
+            {selectedComponent === 'client' && <Client />}
+            {selectedComponent === 'buy' && <Buy />}
+            {selectedComponent === 'sale' && <Sale />}
         </div>
     );
 };
 
-export default EmployeeManagement;
+export default ClientManagement;
