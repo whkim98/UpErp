@@ -33,10 +33,6 @@ const EmployeeD3 = () => {
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error('네트워크 에러');
-            }
-
             const result = await response.json();
             if (selectedOption === 'salary') {
                 const salaryData = result.map(item => ({ salary: Number(item.salary) }));
