@@ -71,7 +71,7 @@ function rowContent(index, row) {
 
 // 테이블 컴포넌트
 export default function ReactVirtualizedTable() {
-    const [order, setOrder] = useState('');
+    // const [order, setOrder] = useState('');
     const [tableData, setTableData] = useState([]); 
 
     useEffect(() => {
@@ -124,20 +124,20 @@ export default function ReactVirtualizedTable() {
         },
     }));
 
-    const handleChange = async (event) => {
-        const selectedOrder = event.target.value;
-        setOrder(selectedOrder);
+    // const handleChange = async (event) => {
+    //     const selectedOrder = event.target.value;
+    //     setOrder(selectedOrder);
 
-        try {
-            const response = await axios.get('/api/orderby/suppliers', {
-                params: { order: selectedOrder }
-            });
-            console.log('데이터', response.data);
-            setTableData(response.data); 
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+    //     try {
+    //         const response = await axios.get('/api/orderby/suppliers', {
+    //             params: { order: selectedOrder }
+    //         });
+    //         console.log('데이터', response.data);
+    //         setTableData(response.data); 
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', padding: '16px', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -151,7 +151,7 @@ export default function ReactVirtualizedTable() {
                         inputProps={{ 'aria-label': 'search' }}
                     />
                 </Search>
-                <FormControl style={{ marginLeft: '16px', width: '150px' }}>
+                {/* <FormControl style={{ marginLeft: '16px', width: '150px' }}>
                     <InputLabel id="demo-simple-select-label">정렬</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -164,7 +164,7 @@ export default function ReactVirtualizedTable() {
                         <MenuItem value={'contact_name'}>담당자순</MenuItem>
                         <MenuItem value={'address'}>주소순</MenuItem>
                     </Select>
-                </FormControl>
+                </FormControl> */}
             </div>
             
             <Paper style={{ height: 400, width: '80%' }}> 
