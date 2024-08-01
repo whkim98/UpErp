@@ -13,6 +13,8 @@ import mysql from 'mysql2';
 const app = express();
 const PORT = 3000;
 
+//redis세션
+
 app.use(cors());
 app.use(express.json());
 
