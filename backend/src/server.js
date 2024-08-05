@@ -14,6 +14,7 @@ const app = express();
 const PORT = 3000;
 
 //redis세션과 express-mysql-session
+//jwt 토큰 방식
 
 app.use(cors());
 app.use(express.json());
