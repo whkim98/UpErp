@@ -15,6 +15,9 @@ const PORT = 3000;
 
 //redis세션과 express-mysql-session
 //jwt 토큰 방식
+//vpc와 subnet 설명해 주세요
+//정규화와 반정규화 했다고 했는데 의미가 없지 않나요
+
 
 app.use(cors());
 app.use(express.json());
